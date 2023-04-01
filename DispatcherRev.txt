@@ -1,5 +1,37 @@
-
+First Run
 
  New Job 
- Revenue for current job is 4.111111111111111
- Total Revenue for Dispatcher is 4.111111111111111
+ Revenue for current job is 4.444444444444445
+ Total Revenue for Dispatcher is 4.444444444444445
+
+Second Run
+ New Job 
+ Revenue for current job is 3.333333333333334
+ Total Revenue for Dispatcher is 3.333333333333334
+
+Third Run
+ New Job 
+ Revenue for current job is 4.0
+ Total Revenue for Dispatcher is 4.0
+ New Job 
+ Revenue for current job is 3.555555555555556
+ Total Revenue for Dispatcher is 7.555555555555555
+ New Job 
+ Revenue for current job is 3.777777777777778
+ Total Revenue for Dispatcher is 11.333333333333334
+ 
+Fourth Run
+ New Job 
+ Revenue for current job is 4.666666666666667
+ Total Revenue for Dispatcher is 4.666666666666667
+
+Fifth Run
+ New Job 
+ Revenue for current job is 3.888888888888889
+ Total Revenue for Dispatcher is 3.888888888888889
+ New Job 
+ Revenue for current job is 4.0
+ Total Revenue for Dispatcher is 7.888888888888889
+
+TESTING
+

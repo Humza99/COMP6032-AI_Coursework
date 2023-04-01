@@ -1,8 +1,45 @@
+First Run
 
  New Job 
+ Total for Job taxi number 101 is 40.0
+ Total Account for taxi number 101 is -110.0
+ Total Revenue is 40.0
 
- Total for Job taxi number 100 is 37.0
- Total Account for taxi number 100 is 28.0
- Time on duty for taxi 100 is 0
- Total Revenue is 28.0
- Time off duty for taxi 100 is 0
+Second Run
+ New Job 
+ Total for Job taxi number 102 is 30.000000000000004
+ Total Account for taxi number 102 is 147.0
+ Total Revenue is 30.000000000000004
+
+Third Run
+
+ New Job 
+ Total for Job taxi number 101 is 36.0
+ Total Account for taxi number 101 is 215.0
+ Total Revenue is 215.0
+ New Job 
+ Total for Job taxi number 102 is 32.0
+ Total Account for taxi number 102 is 141.0
+ Total Revenue is 32.0
+ New Job 
+ Total for Job taxi number 101 is 34.0
+ Total Account for taxi number 101 is 11.0
+ Total Revenue is 66.0
+
+Fourth Run
+ New Job 
+ Total for Job taxi number 101 is 42.0
+ Total Account for taxi number 101 is 216.0
+ Total Revenue is 42.0
+
+Fifth Run
+ New Job 
+ Total for Job taxi number 101 is 35.0
+ Total Account for taxi number 101 is 140.0
+ Total Revenue is 35.0
+ New Job 
+ Total for Job taxi number 100 is 36.0
+ Total Account for taxi number 100 is -26.0
+ Total Revenue is 36.0
+
+TESTING

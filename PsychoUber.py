@@ -196,7 +196,6 @@ def runRoboUber(worldX,worldY,runTime,stop,junctions=None,streets=None,interpola
    print("Bringing taxis on duty")
    for onDutyTaxi in taxis:
        onDutyTaxi.comeOnDuty()
-       print("Taxi's came on duty at {}".format(curTime))
 
    threadRunTime = runTime
    threadTime = 0

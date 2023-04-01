@@ -1,0 +1,32 @@
+First Run
+ Taxi 100 went offline at 256 
+ Taxi 102 went offline at 256 
+ Taxi 101 went offline at 407 
+ The psycho taxi 103 went offline at 512 
+
+Second Run
+ Taxi 100 went offline at 256 
+ Taxi 103 went offline at 256 
+ Taxi 102 went offline at 286 
+ The psycho taxi 101 went offline at 512 
+
+Third Run
+ 
+ Taxi 103 went offline at 256 
+ Taxi 102 went offline at 288 
+ Taxi 101 went offline at 326 
+ The psycho taxi 100 went offline at 512 
+
+Fourth Run
+ Taxi 102 went offline at 256 
+ Taxi 103 went offline at 256 
+ Taxi 101 went offline at 298 
+ The psycho taxi 100 went offline at 512 
+  
+Fifth Run
+ Taxi 102 went offline at 256 
+ Taxi 101 went offline at 291
+ Taxi 100 went offline at 319  
+ The psycho taxi 103 went offline at 512
+
+TESTING

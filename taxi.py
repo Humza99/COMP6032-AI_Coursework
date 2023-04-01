@@ -176,9 +176,21 @@ class Taxi:
       def clockTick(self, world):
           # automatically go off duty if we have absorbed as much loss as we can in a day
           if self._account <= 0 and self._passenger is None:
-             print("Taxi {0} is going off-duty".format(self.number)) #---------------------Try to print curtime below this to see the time the taxi goes off duty.
+             print("Taxi {0} is going off-duty".format(self.number))
              self.onDuty = False
              self._offDutyTime = self._world.simTime
+             # ------> adding code to print taxi offline time to file
+             TimeOffline_file = 'TaxiOffline.txt'
+             offline_exists = False
+             if not os.path.exists(TimeOffline_file):
+               with open(TimeOffline_file, 'w') as f:
+                  f.write("TaxiOffline File created.")
+                  offline_exists = True
+             else: 
+                offline_exists = True 
+             if offline_exists:  
+               f = open("TaxiOffline.txt", 'a')
+               f.write("\n Taxi {} went offline at {} " .format(self.number, self._world.simTime))
           # have we reached our last known destination? Decide what to do now.
           if len(self._path) == 0:
              # obviously, if we have a fare aboard, we expect to have reached their destination,
@@ -317,10 +329,10 @@ class Taxi:
                        fare[1].allocated = True
                        return
           # we just dropped off a fare and received payment, add it to the account
-          # adding code to print taxi number and amount they made
           elif msg == self.FARE_PAY:
              self._account += args['amount'] 
              
+             # ------> adding code to print taxi number and amount they made
              filename = 'TaxiRev.txt'
              file_exist = False
 
@@ -332,15 +344,14 @@ class Taxi:
                 file_exist = True 
              if file_exist:  
                f = open("TaxiRev.txt", 'a')
-               f.write("New Job ")
+               f.write("\n New Job ")
                f.write("\n Total for Job taxi number {} is " .format(self.number)) # get taxi number and print to file
                f.write(str(args['amount'])) # format the amount recived into a string and print it to the file
                f.write('\n Total Account for taxi number {} is {}'.format(self.number, self._account)) # gets the taxi name and total value of taxi account
-               Total = 0 # create variable where the total will be stored
-               Total = Total + self._account # add account money to the total
+               Total = 0 #initalise variable to store total
+               Total += (args['amount']) # add each taxi's account money to total
                f.write("\n Total Revenue is ")
                f.write(str(Total)) #converts total to string and prints value to file
-               f.write('\n')
                f.close()
           # a fare cancelled before being collected, remove it from the list
           elif msg == self.FARE_CANCEL:
@@ -433,12 +444,23 @@ class PsychoTaxi(Taxi):
       # can collect fares using pickupFare, drop them off using dropoffFare, bid for fares issued by the Dispatcher
       # using transmitFareBid, and any other internal activity seen as potentially useful. 
       def clockTick(self, world):
-          print('taxi number {} is the psycho!'.format(self.number)) # ---> Outputs the psycho taxi in the console.
           # automatically go off duty if we have absorbed as much loss as we can in a day
           if self._account <= 0 and self._passenger is None:
              print("Taxi {0} is going off-duty".format(self.number))
              self.onDuty = False
              self._offDutyTime = self._world.simTime
+             # ------> adding code to print taxi offline time to file (function is diffrent to normal taxi one so need to reinsert the print code here)
+             TimeOffline_file = 'TaxiOffline.txt'
+             offline_exists = False
+             if not os.path.exists(TimeOffline_file):
+               with open(TimeOffline_file, 'w') as f:
+                  f.write("TaxiOffline File created.")
+                  offline_exists = True
+             else: 
+                offline_exists = True 
+             if offline_exists:  
+               f = open("TaxiOffline.txt", 'a')
+               f.write("\n The psycho taxi {} went offline at {} " .format(self.number, self._world.simTime))
           # have we reached our last known destination? Decide what to do now.
           if len(self._path) == 0:
              # PsychoTaxi simply kills the passenger!

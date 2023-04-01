@@ -165,7 +165,7 @@ class Dispatcher:
                 file_created = True
              if file_created: 
                file = open("DispatcherRev.txt", 'a')
-               file.write("New Job ")
+               file.write("\n New Job ")
                file.write("\n Revenue for current job is ")
                file.write(str(amount))
                file.write("\n Total Revenue for Dispatcher is ")
