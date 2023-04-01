@@ -1,0 +1,8 @@
+
+ New Job 
+
+ Total for Job taxi number 100 is 37.0
+ Total Account for taxi number 100 is 28.0
+ Time on duty for taxi 100 is 0
+ Total Revenue is 28.0
+ Time off duty for taxi 100 is 0
