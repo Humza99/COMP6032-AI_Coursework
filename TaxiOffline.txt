@@ -29,4 +29,35 @@ Fifth Run
  Taxi 100 went offline at 319  
  The psycho taxi 103 went offline at 512
 
-TESTING
+After A* ALGORITHM IMPLEMENTED 
+
+First Run
+
+ Taxi 103 went offline at 256 
+ Taxi 101 went offline at 330 
+ Taxi 100 went offline at 367 
+ Taxi 102 went offline at 512
+
+Second Run
+ Taxi 103 went offline at 256 
+ Taxi 101 went offline at 366 
+ Taxi 102 went offline at 390 
+ The psycho taxi 100 went offline at 512 
+
+Third Run
+ Taxi 100 went offline at 365 
+ Taxi 102 went offline at 400 
+ Taxi 101 went offline at 409 
+ The psycho taxi 103 went offline at 512 
+
+Fourth Run
+ Taxi 103 went offline at 256 
+ Taxi 101 went offline at 285 
+ Taxi 102 went offline at 323 
+ The psycho taxi 100 went offline at 512
+
+Fifth Run
+ Taxi 103 went offline at 256 
+ Taxi 101 went offline at 354 
+ Taxi 102 went offline at 407 
+ The psycho taxi 100 went offline at 512 

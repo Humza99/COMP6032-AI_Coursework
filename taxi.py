@@ -66,8 +66,6 @@ class Taxi:
           self._dailyLoss = idle_loss
           self._maxFareWait = max_wait
           self._account = 0
-          def get_account(self): # may need to call this to retreive taxi account
-             return self._account
           self._loc = None
           self._direction = -1
           self._nextLoc = None
@@ -118,6 +116,7 @@ class Taxi:
 
       #___________________________________________________________________________________________________________________________
       # methods to populate the taxi's knowledge base
+      
 
       # get a map if none was provided at the outset
       def importMap(self, newMap):
@@ -316,6 +315,7 @@ class Taxi:
       # recvMsg handles various dispatcher messages. 
       def recvMsg(self, msg, **args):
           timeOfMsg = self._world.simTime
+
           # A new fare has requested service: add it to the list of availables
           if msg == self.FARE_ADVICE:
              callTime = self._world.simTime
@@ -331,7 +331,6 @@ class Taxi:
           # we just dropped off a fare and received payment, add it to the account
           elif msg == self.FARE_PAY:
              self._account += args['amount'] 
-             
              # ------> adding code to print taxi number and amount they made
              filename = 'TaxiRev.txt'
              file_exist = False
@@ -342,16 +341,13 @@ class Taxi:
                   file_exist = True
              else: 
                 file_exist = True 
+
              if file_exist:  
                f = open("TaxiRev.txt", 'a')
                f.write("\n New Job ")
                f.write("\n Total for Job taxi number {} is " .format(self.number)) # get taxi number and print to file
                f.write(str(args['amount'])) # format the amount recived into a string and print it to the file
                f.write('\n Total Account for taxi number {} is {}'.format(self.number, self._account)) # gets the taxi name and total value of taxi account
-               Total = 0 #initalise variable to store total
-               Total += (args['amount']) # add each taxi's account money to total
-               f.write("\n Total Revenue is ")
-               f.write(str(Total)) #converts total to string and prints value to file
                f.close()
           # a fare cancelled before being collected, remove it from the list
           elif msg == self.FARE_CANCEL:
@@ -368,39 +364,52 @@ class Taxi:
       # this function should build your route and fill the _path list for each new
       # journey. Below is a naive depth-first search implementation. You should be able
       # to do much better than this!
-      def _planPath(self, origin, destination, **args):
-          # the list of explored paths. Recursive invocations pass in explored as a parameter
-          if 'explored' not in args:
-             args['explored'] = {}
-          # add this origin to the explored list
-          # explored is a dict purely so we can hash its index for fast lookup, so its value doesn't matter
-          args['explored'][origin] = None 
-          # the actual path we are going to generate
-          path = [origin]
-          # take the next node in the frontier, and expand it depth-wise               
-          if origin in self._map:
-             # the frontier of unexplored paths (from this Node
-             frontier = [node for node in self._map[origin].keys() if node not in args['explored']]
-             # recurse down to the next node. This will automatically create a depth-first
-             # approach because the recursion won't bottom out until no more frontier nodes
-             # can be generated 
-             for nextNode in frontier:
-                 path = path + self._planPath(nextNode, destination, explored=args['explored'])
-                 # stop early as soon as the destination has been found by any route.
-                 if destination in path:
-                    # validate path
-                    if len(path) > 1:
-                       try:
-                           # use a generator expression to find any invalid nodes in the path
-                           badNode = next(pnode for pnode in path[1:] if pnode not in self._map[path[path.index(pnode)-1]].keys())
-                           raise IndexError("Invalid path: no route from ({0},{1}) to ({2},{3} in map".format(self._map[path.index(pnode)-1][0], self._map[path.index(pnode)-1][1], pnode[0], pnode[1]))
-                       except StopIteration:
-                           pass
-                    return path
-          # didn't reach the destination from any reachable node
-          # no need, therefore, to expand the path for the higher-level call, this is a dead end.
-          return [] 
-                
+      
+      #A* Algorithm implementation to improve path planning
+      def _planPath(self, origin, destination, heuristic=None):
+         #set heuristic for function using formula
+         if heuristic is None: heuristic = lambda x, y: math.sqrt((x[0]-y[0])**2+(x[1]-y[1])**2)
+         #nodes that have been explored
+         searchedNodes = set()
+         #nodes that need to be explored
+         expanded = {heuristic(origin, destination): {origin: [origin]}}
+         #if fare not in map or is already at destination, dont do the fare.
+         if origin not in self._map:
+            return None
+         if origin == destination:
+               return None
+         
+         while len(expanded) > 0:
+               #least amount of nodes == best route
+                bestRoute = min(expanded.keys())
+               #follows the best path by expanding the best route
+                nextSearch = expanded[bestRoute]
+               #checks if destintaion is in next node, if not return best path
+                if destination in nextSearch:
+                  return nextSearch[destination]
+               #remove node from dict and check if it has been searched
+                nextNode = nextSearch.popitem()
+                while len(nextSearch) > 0 and nextNode[0] in searchedNodes:
+                      nextNode = nextSearch.popitem()
+                #if node already searched, discard it.
+                if len(nextSearch) == 0:
+                   del expanded[bestRoute]
+                # if node not searched, then add to searched nodes and find next node to explore
+                if nextNode[0] not in searchedNodes:
+                   searchedNodes.add(nextNode[0])
+                   nextTargets = [node for node in self._map[nextNode[0]].items() if node[0] not in searchedNodes]
+                   # nodes still to explore untill destination found or all nodes searched
+                   while len(nextTargets) > 0:
+                         expTarget = nextTargets.pop()
+                         #find distance to destination
+                         approxDistance = bestRoute-heuristic(nextNode[1] [0], destination) + (expTarget[1][0]) + heuristic(expTarget[1], destination)
+                         #add next nodes to dict if not been searched yet
+                         if approxDistance in expanded:             
+                            expanded[approxDistance][expTarget[0]] = nextNode[1] + [expTarget[0]]
+                         else:
+                            expanded[approxDistance] = {expTarget[0]: nextNode[1] + [expTarget[0]]}
+         return [] 
+      
       # TODO
       # this function decides whether to offer a bid for a fare. In general you can consider your current position, time,
       # financial state, the collection and dropoff points, the time the fare called - or indeed any other variable that

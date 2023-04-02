@@ -42,4 +42,109 @@ Fifth Run
  Total Account for taxi number 100 is -26.0
  Total Revenue is 36.0
 
-TESTING
+After A* ALGORITHM IMPLEMENTED 
+
+First Run
+
+ New Job 
+ Total for Job taxi number 101 is 44.0
+ Total Account for taxi number 101 is 213.0
+ New Job 
+ Total for Job taxi number 100 is 38.0
+ Total Account for taxi number 100 is 196.0
+ New Job 
+ Total for Job taxi number 101 is 30.000000000000004
+ Total Account for taxi number 101 is 175.0
+ New Job 
+ Total for Job taxi number 100 is 37.0
+ Total Account for taxi number 100 is 159.0
+ New Job 
+ Total for Job taxi number 100 is 36.0
+ Total Account for taxi number 100 is 131.0
+
+Second Run
+ New Job 
+ Total for Job taxi number 101 is 33.0
+ Total Account for taxi number 101 is 209.0
+ New Job 
+ Total for Job taxi number 102 is 48.0
+ Total Account for taxi number 102 is 205.0
+ New Job 
+ Total for Job taxi number 101 is 38.0
+ Total Account for taxi number 101 is 165.0
+ New Job 
+ Total for Job taxi number 102 is 45.0
+ Total Account for taxi number 102 is 132.0
+ New Job 
+ Total for Job taxi number 101 is 39.0
+ Total Account for taxi number 101 is 120.0
+ New Job 
+ Total for Job taxi number 102 is 41.0
+ Total Account for taxi number 102 is 79.0
+
+Third Run
+
+ New Job 
+ Total for Job taxi number 100 is 36.0
+ Total Account for taxi number 100 is 219.0
+ New Job 
+ Total for Job taxi number 101 is 40.0
+ Total Account for taxi number 101 is 215.0
+ New Job 
+ Total for Job taxi number 102 is 44.0
+ Total Account for taxi number 102 is 200.0
+ New Job 
+ Total for Job taxi number 102 is 33.0
+ Total Account for taxi number 102 is 196.0
+ New Job 
+ Total for Job taxi number 101 is 32.0
+ Total Account for taxi number 101 is 188.0
+ New Job 
+ Total for Job taxi number 100 is 38.0
+ Total Account for taxi number 100 is 185.0
+ New Job 
+ Total for Job taxi number 101 is 38.0
+ Total Account for taxi number 101 is 157.0
+ New Job 
+ Total for Job taxi number 102 is 37.0
+ Total Account for taxi number 102 is 156.0
+ New Job 
+ Total for Job taxi number 102 is 30.000000000000004
+ Total Account for taxi number 102 is 150.0
+ New Job 
+ Total for Job taxi number 101 is 43.0
+ Total Account for taxi number 101 is 111.0
+ New Job 
+ Total for Job taxi number 100 is 35.0
+ Total Account for taxi number 100 is 34.0
+
+Fourth Run
+ New Job 
+ Total for Job taxi number 102 is 33.0
+ Total Account for taxi number 102 is 219.0
+ New Job 
+ Total for Job taxi number 101 is 29.0
+ Total Account for taxi number 101 is 187.0
+ New Job 
+ Total for Job taxi number 102 is 34.0
+ Total Account for taxi number 102 is 191.0
+
+Fifth Run
+ New Job 
+ Total for Job taxi number 101 is 30.000000000000004
+ Total Account for taxi number 101 is 243.0
+ New Job 
+ Total for Job taxi number 102 is 40.0
+ Total Account for taxi number 102 is 162.0
+ New Job 
+ Total for Job taxi number 101 is 37.0
+ Total Account for taxi number 101 is 126.0
+ New Job 
+ Total for Job taxi number 102 is 41.0
+ Total Account for taxi number 102 is 135.0
+ New Job 
+ Total for Job taxi number 101 is 31.0
+ Total Account for taxi number 101 is 91.0
+ New Job 
+ Total for Job taxi number 102 is 43.0
+ Total Account for taxi number 102 is -26.0
