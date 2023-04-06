@@ -2,6 +2,8 @@ import math
 import numpy
 import heapq
 import os
+from taxi import *
+
 
 # a data container for all pertinent information related to fares. (Should we
 # add an underway flag and require taxis to acknowledge collection to the dispatcher?)
@@ -32,7 +34,7 @@ class Dispatcher:
       # with taxi and map information.
       def __init__(self, parent, taxis=None, serviceMap=None):
 
-          self._parent = parent #amount made from taxi
+          self._parent = parent # amount made from taxi
           # our incoming account
           self._revenue = 0
           # the list of taxis
@@ -156,13 +158,19 @@ class Dispatcher:
              self._revenue += amount
 
              # code added to print dispatcher revenue to file
-             Dispatcher_filename = 'DispatcherRev.txt'
+             dispatcherFile = 'DispatcherRev.txt'
              file_created = True
-             if not os.path.exists(Dispatcher_filename):
-               with open(Dispatcher_filename, 'w') as file:
+
+             # check if file exists, if it doesnt then create one with that name
+             if not os.path.exists(dispatcherFile):
+               with open(dispatcherFile, 'w') as file:
                   file.write("DispatcherRev File created.")
+                  # mark the file as 'been created' with a bool so it knows to do the instructions
+                  file_created = True  
              else: 
-                file_created = True
+                # the file is marked as exists so it can now write to it.
+                file_created = True 
+             # the file is created so follow these instructions to print dispatcher revenue
              if file_created: 
                file = open("DispatcherRev.txt", 'a')
                file.write("\n New Job ")
@@ -212,17 +220,124 @@ class Dispatcher:
       def _costFare(self, fare):
           timeToDestination = self._parent.travelTime(self._parent.getNode(fare.origin[0],fare.origin[1]),
                                                       self._parent.getNode(fare.destination[0],fare.destination[1]))
+
           # if the world is gridlocked, a flat fare applies.
           if timeToDestination < 0:
-             return 150
-          return (25+timeToDestination)/0.9
+             return 2*150 # return 150 - original
 
+          return 2*(25+timeToDestination)/0.9 # no 2* - original
+          
       # TODO
       # this method decides which taxi to allocate to a given fare. The algorithm here is not a fair allocation
       # scheme: taxis can (and do!) get starved for fares, simply because they happen to be far away from the
       # action. You should be able to do better than that using some form of CSP solver (this is just a suggestion,
       # other methods are also acceptable and welcome).
+      
       def _allocateFare(self, origin, destination, time):
+           # check that at most 5 ticks have elapsed since the fare request was made, if more than 5 ticks have passed, no taxi can respond to this fare request.
+          if self._parent.simTime-time > 5:
+             # assign variables (-1 reprsents no allocation)
+             allocatedTaxi = -1
+             winnerNode = None
+             # get node representing location of the fare.
+             fareNode = self._parent.getNode(origin[0],origin[1])
+             # this does the allocation. There are a LOT of conditions to check, namely:
+             # 1) that the fare is asking for transport from a valid location;
+             # 2) that the bidding taxi is in the dispatcher's list of taxis
+             # 3) that the taxi's location is 'on-grid': somewhere in the dispatcher's map
+             # 4) that at least one valid taxi has actually bid on the fare
+            
+             # Attempt at using weighted sum heuristic
+             # if there is a fare meeting all conditions, go into loop.
+             if fareNode is not None:
+                # loop over all taxis that have bid on this fare.
+                for taxiIdx in self._fareBoard[origin][destination][time].bidders:
+                    # is the taxi in self._taxi list
+                    if len(self._taxis) > taxiIdx:   
+                       # get taxi location and assign it to variable and update bidder node
+                       bidderLoc = self._taxis[taxiIdx].currentLocation 
+                       bidderNode = self._parent.getNode(bidderLoc[0],bidderLoc[1]) 
+                       if bidderNode is not None:
+                        # create variables to work with impacted severity for each taxi, lower the severity the more likely taxi needs a fare.
+                          lowestAccount = 0
+                          highestAccount = 0
+                          lowestFare = 0
+                          highestFare = 0
+                          minDist = 0
+                          maxDist = 0
+                          # check allocated fares in index [allocatedTaxi] and return values if allocated, assign to variable
+                          numOf_taxiFares = len([fare for fare in self._taxis[allocatedTaxi]._availableFares.values() if fare.allocated]) 
+                          # check allocated fares in index [taxiIdx] and return values if allocated
+                          numOf_indexFares = len([fare for fare in self._taxis[taxiIdx]._availableFares.values() if fare.allocated])
+                          # checks which has shorter distance to fare, bidder taxi or winner taxi, assign to variable
+                          shorterDist = self._parent.distance2Node(bidderNode,fareNode) < self._parent.distance2Node(winnerNode,fareNode)
+                        # update each of the variables with the infomation from the world to help select a winner
+                          if self._taxis[taxiIdx]._account < lowestAccount: 
+                              # add taxi account to lowest account 
+                              lowestAccount = self._taxis[taxiIdx]._account
+                          else:
+                              # add taxi account to highest account 
+                              highestAccount = self._taxis[taxiIdx]._account
+                          if numOf_indexFares < numOf_taxiFares:
+                              lowestFare = numOf_indexFares
+                          else:
+                              highestFare = numOf_indexFares
+                        # get min and max distance between bidder and fare
+                          if shorterDist:
+                                minDist = self._parent.distance2Node(bidderNode,fareNode)
+                          else:
+                                maxDist = self._parent.distance2Node(winnerNode,fareNode)
+                # initalise variable for severity severity
+                allocatedTaxi_severity = 0
+                # iterate each taxi
+                for taxiIdx in self._fareBoard[origin][destination][time].bidders:
+                  # check if valid taxi index
+                  if len(self._taxis) > taxiIdx:
+                     # get taxi location and assign it to variable and update bidder node
+                     bidderLoc = self._taxis[taxiIdx].currentLocation
+                     bidderNode = self._parent.getNode(bidderLoc[0],bidderLoc[1])
+                     # weighted sum heuristic
+                     if bidderNode is not None:
+                        # assign default weights 
+                        weightAccount = 1
+                        weightFare = 1
+                        weightDist = 1
+                        weightPassenger = 1
+                        # lower the severity the more likely taxi needs fare                  
+                        if (highestAccount - lowestAccount) == 0:
+                           taxiAccount_severity = 1
+                        else:
+                           taxiAccount_severity = 1 - ((self._taxis[taxiIdx]._account - lowestAccount) / (highestAccount - lowestAccount))
+                        # severity of taxi's bid based on fare
+                        if (highestFare - lowestFare) == 0:
+                           taxiFare_severity = 1
+                        else:
+                           taxiFare_severity = 1 - ((numOf_indexFares - lowestFare) / (highestFare - lowestFare))
+                        # severity of the distance between the taxi and the fare
+                        if (maxDist - minDist) == 0:
+                           taxiDist_severity = 1
+                        else:
+                           taxiDist_severity = 1 - ((self._parent.distance2Node(bidderNode,fareNode) - minDist) / (maxDist - minDist))
+                        # check taxi has passenger, assign to severity
+                        taxiPassenger_severity = 1 - int((self._taxis[taxiIdx]._passenger == None))
+                        # calculating overall severity by combining each severity with weight
+                        taxiseverity = (taxiAccount_severity * weightAccount) + (taxiFare_severity * weightFare) + (taxiDist_severity * weightDist) + (taxiPassenger_severity * weightPassenger)
+                        # if taxi severity higher than allocated taxi severity, update allocated taxi and allocated taxi severity
+                        if taxiseverity > allocatedTaxi_severity:
+                           allocatedTaxi_severity = taxiseverity
+                           allocatedTaxi = taxiIdx
+                # and after all that, we still have to check that somebody won, because any of the other reasons to invalidate
+                # the auction may have occurred.
+                if allocatedTaxi >= 0:
+                     # but if so, allocate the taxi.
+                     self._fareBoard[origin][destination][time].taxi = allocatedTaxi
+                     self._parent.allocateFare(origin,self._taxis[allocatedTaxi])
+
+
+
+
+      # ORIGINAL FUNCTION              
+'''   def _allocateFare(self, origin, destination, time):
            # a very simple approach here gives taxis at most 5 ticks to respond, which can
            # surely be improved upon.
           if self._parent.simTime-time > 5:
@@ -253,3 +368,6 @@ class Dispatcher:
                                 self._fareBoard[origin][destination][time].taxi = allocatedTaxi     
                                 self._parent.allocateFare(origin,self._taxis[allocatedTaxi])
      
+'''
+      
+

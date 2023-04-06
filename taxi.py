@@ -70,6 +70,7 @@ class Taxi:
           self._direction = -1
           self._nextLoc = None
           self._nextDirection = -1
+
           # this contains a Fare (object) that the taxi has picked up. You use the functions pickupFare()
           # and dropOffFare() in a given Node to collect and deliver a fare
           self._passenger = None
@@ -181,15 +182,20 @@ class Taxi:
              # ------> adding code to print taxi offline time to file
              TimeOffline_file = 'TaxiOffline.txt'
              offline_exists = False
+             # check if the file 'TaxiOffline.txt' exists, if it doesnt then create a file with that name
              if not os.path.exists(TimeOffline_file):
                with open(TimeOffline_file, 'w') as f:
                   f.write("TaxiOffline File created.")
+                  # the file has been created so mark it as true so the if statement knows to run.
                   offline_exists = True
              else: 
+                # file already exists so just mark it as true.
                 offline_exists = True 
+             # if the file exists, then carry out these instructions that write offline time to file for each non-psycho taxi
              if offline_exists:  
                f = open("TaxiOffline.txt", 'a')
                f.write("\n Taxi {} went offline at {} " .format(self.number, self._world.simTime))
+               f.close()
           # have we reached our last known destination? Decide what to do now.
           if len(self._path) == 0:
              # obviously, if we have a fare aboard, we expect to have reached their destination,
@@ -331,23 +337,25 @@ class Taxi:
           # we just dropped off a fare and received payment, add it to the account
           elif msg == self.FARE_PAY:
              self._account += args['amount'] 
-             # ------> adding code to print taxi number and amount they made
-             filename = 'TaxiRev.txt'
+             # adding code to print taxi number and amount they made
+             filename = 'TaxiRev.txt' 
              file_exist = False
-
-             if not os.path.exists(filename):
+             # check if this file exists, if not then make a new file with the name 'TaxiRev.txt'
+             if not os.path.exists(filename): 
                with open(filename, 'w') as f:
-                  f.write("TaxiRev File created.")
+                  f.write("New TaxiRev File created.")
+                  # mark the file does exist.
                   file_exist = True
              else: 
+                # the file already exists so mark it as exists with bool
                 file_exist = True 
-
+             # if the file exists then carry out these instructions to write to the file.
              if file_exist:  
                f = open("TaxiRev.txt", 'a')
                f.write("\n New Job ")
                f.write("\n Total for Job taxi number {} is " .format(self.number)) # get taxi number and print to file
                f.write(str(args['amount'])) # format the amount recived into a string and print it to the file
-               f.write('\n Total Account for taxi number {} is {}'.format(self.number, self._account)) # gets the taxi name and total value of taxi account
+               f.write('\n Total Account for taxi number {} is {}'.format(self.number, self._account)) # print taxi name and taxi account
                f.close()
           # a fare cancelled before being collected, remove it from the list
           elif msg == self.FARE_CANCEL:
@@ -401,8 +409,12 @@ class Taxi:
                    # nodes still to explore untill destination found or all nodes searched
                    while len(nextTargets) > 0:
                          expTarget = nextTargets.pop()
-                         #find distance to destination
-                         approxDistance = bestRoute-heuristic(nextNode[1] [0], destination) + (expTarget[1][0]) + heuristic(expTarget[1], destination)
+                         # probabilistic pp attempt
+                         # work out probabilty of traffic at next node
+                         # nextNode_traffic = (self._world.getNode(nextNode[0][0], nextNode[0][1])._traffic / self._world.getNode(nextNode[0][0], nextNode[0][1])._trafficMax)
+                         # increasedTraffic = 1 + nextNode_traffic
+                         # find distance to destination (pp - multiply by traffic at next node to get new estimated distance)
+                         approxDistance = bestRoute-heuristic(nextNode[1] [0], destination) + (expTarget[1][0]) + heuristic(expTarget[1], destination) #* increasedTraffic
                          #add next nodes to dict if not been searched yet
                          if approxDistance in expanded:             
                             expanded[approxDistance][expTarget[0]] = nextNode[1] + [expTarget[0]]
@@ -417,25 +429,44 @@ class Taxi:
       # a hint that maybe some form of CSP solver with automated reasoning might be a good way of implementing this. But
       # other methodologies could work well. For best results you will almost certainly need to use probabilistic reasoning.
       def _bidOnFare(self, time, origin, destination, price):
-          NoCurrentPassengers = self._passenger is None
-          NoAllocatedFares = len([fare for fare in self._availableFares.values() if fare.allocated]) == 0
-          TimeToOrigin = self._world.travelTime(self._loc, self._world.getNode(origin[0], origin[1]))
-          TimeToDestination = self._world.travelTime(self._world.getNode(origin[0], origin[1]),
-                                                     self._world.getNode(destination[1], destination[1]))
-          FiniteTimeToOrigin = TimeToOrigin > 0
-          FiniteTimeToDestination = TimeToDestination > 0
-          CanAffordToDrive = self._account > TimeToOrigin
-          FairPriceToDestination = price > TimeToDestination
-          PriceBetterThanCost = FairPriceToDestination and FiniteTimeToDestination
-          FareExpiryInFuture = self._maxFareWait > self._world.simTime-time
-          EnoughTimeToReachFare = self._maxFareWait-self._world.simTime+time > TimeToOrigin
-          SufficientDrivingTime = FiniteTimeToOrigin and EnoughTimeToReachFare 
-          WillArriveOnTime = FareExpiryInFuture and SufficientDrivingTime
-          NotCurrentlyBooked = NoCurrentPassengers and NoAllocatedFares
-          CloseEnough = CanAffordToDrive and WillArriveOnTime
-          Worthwhile = PriceBetterThanCost and NotCurrentlyBooked 
-          Bid = CloseEnough and Worthwhile
-          return Bid
+            NoCurrentPassengers = self._passenger is None 
+            NoAllocatedFares = len([fare for fare in self._availableFares.values() if fare.allocated]) == 0
+            TimeToOrigin = self._world.travelTime(self._loc, self._world.getNode(origin[0], origin[1]))
+            TimeToDestination = self._world.travelTime(self._world.getNode(origin[0], origin[1]),
+                                                      self._world.getNode(destination[1], destination[1]))
+            FiniteTimeToOrigin = TimeToOrigin > 0
+            FiniteTimeToDestination = TimeToDestination > 0
+            CanAffordToDrive = self._account > TimeToOrigin
+            FairPriceToDestination = price > TimeToDestination
+            PriceBetterThanCost = FairPriceToDestination and FiniteTimeToDestination
+            FareExpiryInFuture = self._maxFareWait > self._world.simTime-time
+            EnoughTimeToReachFare = self._maxFareWait-self._world.simTime+time > TimeToOrigin
+            SufficientDrivingTime = FiniteTimeToOrigin and EnoughTimeToReachFare 
+            WillArriveOnTime = FareExpiryInFuture and SufficientDrivingTime
+            NotCurrentlyBooked = NoCurrentPassengers and NoAllocatedFares
+            CloseEnough = CanAffordToDrive and WillArriveOnTime
+            Worthwhile = PriceBetterThanCost and NotCurrentlyBooked 
+            Bid = CloseEnough and Worthwhile
+         #  potential CSPs, nothing concrete though that can be implemented
+         #  if money < 100:
+         #    severity = 1
+         #  elif money < 200:
+         #    severity = 0.8
+         #  elif money < 300:
+         #    severity = 0.7
+         #  else:
+         #    severity = 0.5
+
+         #  # CSP to determine how important their current fares state is
+         #  if NoAllocatedFares < 1:
+         #    severityFares = 1
+         #  elif NoAllocatedFares < 2:
+         #    severityFares = 0.8
+         #  elif NoAllocatedFares < 3:
+         #    severityFares = 0.7
+         #  else:
+         #    severityFares = 0.5
+            return Bid
 
 # PyschoTaxi behaves exactly like a regular taxi, except that 1) it is more patient before going 'off duty,
 # with a 2x minimum idle loss, and 2) it kills passengers rather than dropping them off. Note that because it inherits
@@ -444,7 +475,8 @@ class PsychoTaxi(Taxi):
 
       # everything about a PsychoTaxi is the same except it can absorb a larger amount of loss.
       def __init__(self, world, taxi_num, idle_loss=256, max_wait=50, on_duty_time=0, off_duty_time=0, service_area=None, start_point=None):
-      
+         
+         # converting the boolean to true here in the psycho taxi class
           super().__init__(world, taxi_num, idle_loss*2, max_wait, on_duty_time, off_duty_time, service_area, start_point)
 
       # clockTick should handle all the non-driving behaviour, turn selection, stopping, etc. Drive automatically
@@ -458,18 +490,21 @@ class PsychoTaxi(Taxi):
              print("Taxi {0} is going off-duty".format(self.number))
              self.onDuty = False
              self._offDutyTime = self._world.simTime
-             # ------> adding code to print taxi offline time to file (function is diffrent to normal taxi one so need to reinsert the print code here)
+             # adding code to print taxi offline time to file (function is different to normal taxi one so need to reinsert the print code here)
              TimeOffline_file = 'TaxiOffline.txt'
              offline_exists = False
+             # check if file exists, if it doesnt then create a new file with that name.
              if not os.path.exists(TimeOffline_file):
                with open(TimeOffline_file, 'w') as f:
                   f.write("TaxiOffline File created.")
                   offline_exists = True
              else: 
                 offline_exists = True 
+             # the file exists so carry out these instructions that print the psycho taxi offline time to file.
              if offline_exists:  
                f = open("TaxiOffline.txt", 'a')
                f.write("\n The psycho taxi {} went offline at {} " .format(self.number, self._world.simTime))
+               f.close()
           # have we reached our last known destination? Decide what to do now.
           if len(self._path) == 0:
              # PsychoTaxi simply kills the passenger!

@@ -43,7 +43,13 @@ class Fare:
           if (expectedTime2Dest < 0) or (self._price > 10*expectedTime2Dest):
              print("Fare ({0},{1}) abandoned because expectedTime2Dest was {2} and price was {3}".format(self.origin[0],self.origin[1],expectedTime2Dest, self._price))
              self._waitTime = 0
-
+            #  print("Fare ({0},{1}) abandoned because expectedTime2Dest was {2} and price was {3}".format(self.origin[0],self.origin[1],expectedTime2Dest, self._price))
+            #  print to file instead so its easier to read than looking in console. (used for 1c)
+            #  faresFile = 'TaxiOffline.txt'
+            #  with open(faresFile, 'a') as ff:
+            #     ff.write("\n Fare ({0},{1}) abandoned because expectedTime2Dest was {2} and price was {3}".format(self.origin[0],self.origin[1],expectedTime2Dest, self._price))
+            #     ff.close()
+            
       # clear gets rid of any references to objects so that garbage collection can
       # delete the object for sure.
       def clear(self):

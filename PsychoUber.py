@@ -9,7 +9,6 @@ import json
 import networld
 import taxi
 import dispatcher
-
 # create objects for RoboUber
 
 # TODO
@@ -201,7 +200,6 @@ def runRoboUber(worldX,worldY,runTime,stop,junctions=None,streets=None,interpola
    threadTime = 0
    print("Starting world")
    while threadTime < threadRunTime:
-
          # exit if 'q' has been pressed
          if stop.is_set():
             threadRunTime = 0
@@ -210,7 +208,7 @@ def runRoboUber(worldX,worldY,runTime,stop,junctions=None,streets=None,interpola
             # print("Times: {0}, Fares: {1}, Taxis: {2}".format(outputValues['time'], outputValues['fares'].keys(), outputValues['taxis'].keys()))
             if threadTime != svcArea.simTime:
                threadTime += 1
-            time.sleep(0.1)
+            time.sleep(0.01)
 
 # event to manage a user exit, invoked by pressing 'q' on the keyboard
 userExit = threading.Event()

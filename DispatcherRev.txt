@@ -139,3 +139,128 @@ Fifth Run
  New Job 
  Revenue for current job is 4.777777777777778
  Total Revenue for Dispatcher is 24.66666666666667
+
+TESTING
+
+ New Job 
+ Revenue for current job is 8.444444444444445
+ Total Revenue for Dispatcher is 8.444444444444445
+ New Job 
+ Revenue for current job is 8.0
+ Total Revenue for Dispatcher is 16.444444444444443
+ New Job 
+ Revenue for current job is 8.222222222222221
+ Total Revenue for Dispatcher is 24.666666666666664
+ New Job 
+ Revenue for current job is 8.222222222222221
+ Total Revenue for Dispatcher is 32.888888888888886
+ New Job 
+ Revenue for current job is 7.555555555555556
+ Total Revenue for Dispatcher is 40.44444444444444
+ New Job 
+ Revenue for current job is 9.555555555555555
+ Total Revenue for Dispatcher is 50.0
+ New Job 
+ Revenue for current job is 7.555555555555556
+ Total Revenue for Dispatcher is 57.55555555555556
+ New Job 
+ Revenue for current job is 9.555555555555555
+ Total Revenue for Dispatcher is 67.11111111111111
+ New Job 
+ Revenue for current job is 9.111111111111112
+ Total Revenue for Dispatcher is 76.22222222222223
+ New Job 
+ Revenue for current job is 7.555555555555556
+ Total Revenue for Dispatcher is 83.77777777777779
+ New Job 
+ Revenue for current job is 7.555555555555556
+ Total Revenue for Dispatcher is 91.33333333333334
+ New Job 
+ Revenue for current job is 7.777777777777778
+ Total Revenue for Dispatcher is 99.11111111111111
+ New Job 
+ Revenue for current job is 9.111111111111112
+ Total Revenue for Dispatcher is 108.22222222222223
+ New Job 
+ Revenue for current job is 8.88888888888889
+ Total Revenue for Dispatcher is 117.11111111111111
+
+ TEST 2
+
+ New Job 
+ Revenue for current job is 7.555555555555556
+ Total Revenue for Dispatcher is 7.555555555555556
+ New Job 
+ Revenue for current job is 9.111111111111112
+ Total Revenue for Dispatcher is 16.666666666666668
+ New Job 
+ Revenue for current job is 8.222222222222221
+ Total Revenue for Dispatcher is 24.88888888888889
+ New Job 
+ Revenue for current job is 8.0
+ Total Revenue for Dispatcher is 32.888888888888886
+ New Job 
+ Revenue for current job is 8.0
+ Total Revenue for Dispatcher is 40.888888888888886
+
+ TEST 3
+
+ New Job 
+ Revenue for current job is 8.444444444444445
+ Total Revenue for Dispatcher is 8.444444444444445
+ New Job 
+ Revenue for current job is 7.777777777777778
+ Total Revenue for Dispatcher is 16.22222222222222
+ New Job 
+ Revenue for current job is 8.222222222222221
+ Total Revenue for Dispatcher is 24.444444444444443
+
+  TEST 4
+ New Job 
+ Revenue for current job is 7.555555555555556
+ Total Revenue for Dispatcher is 7.555555555555556
+ New Job 
+ Revenue for current job is 8.0
+ Total Revenue for Dispatcher is 15.555555555555557
+ New Job 
+ Revenue for current job is 7.333333333333333
+ Total Revenue for Dispatcher is 22.88888888888889
+ New Job 
+ Revenue for current job is 7.777777777777778
+ Total Revenue for Dispatcher is 30.666666666666668
+ New Job 
+ Revenue for current job is 7.555555555555556
+ Total Revenue for Dispatcher is 38.22222222222222
+ New Job 
+ Revenue for current job is 9.333333333333334
+ Total Revenue for Dispatcher is 47.55555555555556
+ New Job 
+ Revenue for current job is 8.444444444444445
+ Total Revenue for Dispatcher is 56.0
+
+ TEST 5
+
+ New Job 
+ Revenue for current job is 7.333333333333333
+ Total Revenue for Dispatcher is 7.333333333333333
+ New Job 
+ Revenue for current job is 8.444444444444445
+ Total Revenue for Dispatcher is 15.777777777777779
+ New Job 
+ Revenue for current job is 7.333333333333333
+ Total Revenue for Dispatcher is 23.11111111111111
+ New Job 
+ Revenue for current job is 8.88888888888889
+ Total Revenue for Dispatcher is 32.0
+ New Job 
+ Revenue for current job is 8.444444444444445
+ Total Revenue for Dispatcher is 40.44444444444444
+ New Job 
+ Revenue for current job is 8.222222222222221
+ Total Revenue for Dispatcher is 48.666666666666664
+ New Job 
+ Revenue for current job is 8.0
+ Total Revenue for Dispatcher is 56.666666666666664
+ New Job 
+ Revenue for current job is 7.777777777777778
+ Total Revenue for Dispatcher is 64.44444444444444

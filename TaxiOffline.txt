@@ -61,3 +61,70 @@ Fifth Run
  Taxi 101 went offline at 354 
  Taxi 102 went offline at 407 
  The psycho taxi 100 went offline at 512 
+
+ALOCATION FUNCTION TESTING 
+
+First Run 
+ Taxi 101 went offline at 256 
+ Taxi 102 went offline at 322 
+ Taxi 100 went offline at 352 
+ The psycho taxi 103 went offline at 512 
+
+Second Run
+
+ Taxi 101 went offline at 256 
+ Taxi 102 went offline at 286 
+ Taxi 103 went offline at 301 
+ The psycho taxi 100 went offline at 512
+
+Third Run
+ Taxi 101 went offline at 287 
+ Taxi 103 went offline at 359 
+ The psycho taxi 102 went offline at 512 
+ Taxi 100 went offline at 535 
+
+Fourth Run
+ Taxi 102 went offline at 256 
+ Taxi 103 went offline at 336 
+ Taxi 100 went offline at 377 
+ The psycho taxi 101 went offline at 512 
+
+Fifth Run
+ Taxi 101 went offline at 300 
+ Taxi 100 went offline at 328 
+ Taxi 103 went offline at 354 
+ The psycho taxi 102 went offline at 512
+ 
+TESTING
+
+ Taxi 103 went offline at 474 
+ The psycho taxi 100 went offline at 512 
+ Taxi 101 went offline at 689 
+ Taxi 102 went offline at 716 
+
+TEST 2
+
+ Taxi 102 went offline at 256 
+ Taxi 103 went offline at 470 
+ The psycho taxi 100 went offline at 512 
+ Taxi 101 went offline at 535 
+
+TEST 3
+
+ Taxi 100 went offline at 256 
+ Taxi 101 went offline at 376 
+ Taxi 103 went offline at 402 
+ The psycho taxi 102 went offline at 512 
+
+ TEST 4
+ Taxi 102 went offline at 256 
+ Taxi 103 went offline at 328 
+ The psycho taxi 101 went offline at 513 
+ Taxi 100 went offline at 690 
+
+ TEST 5
+
+ Taxi 101 went offline at 350 
+ Taxi 100 went offline at 484 
+ The psycho taxi 103 went offline at 512 
+ Taxi 102 went offline at 534 
